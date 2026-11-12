@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusConnect | Placement Management</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f4f6fb;
+    color: #202943;
+}
+
+/* Layout */
+.sidebar {
+    width: 245px;
+    height: 100vh;
+    background: #18243d;
+    color: white;
+    position: fixed;
+    padding: 25px 18px;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.logo span {
+    color: #65b6ff;
+}
+
+.sidebar h4 {
+    color: #8492aa;
+    font-size: 11px;
+    margin: 25px 12px 12px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 13px 14px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #30486e;
+    color: white;
+}
+
+.main {
+    margin-left: 245px;
+    padding: 28px 35px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header p {
+    color: #7b8498;
+    margin-top: 6px;
+}
+
+.profile {
+    background: white;
+    padding: 10px 17px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* Statistics */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: white;
+    padding: 23px;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px #1725540a;
+}
+
+.stat-card p {
+    color: #7c879b;
+    font-size: 14px;
+}
+
+.stat-card h2 {
+    font-size: 29px;
+    margin-top: 12px;
+}
+
+.stat-card small {
+    color: #16a36a;
+}
+
+/* Content */
+.section {
+    background: white;
+    border-radius: 13px;
+    padding: 23px;
+    margin-bottom: 25px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+button {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.primary {
+    background: #2765d8;
+    color: white;
+}
+
+.primary:hover {
+    background: #164eb5;
+}
+
+.search-area {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    padding: 11px;
+    border: 1px solid #dce2ed;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+}
+
+input:focus, select:focus {
+    border-color: #2765d8;
+}
+
+.search-area input {
+    flex: 1;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 15px 12px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f5;
+    font-size: 14px;
+}
+
+th {
+    color: #78849a;
+    background: #f8f9fc;
+}
+
+.company {
+    font-weight: 600;
+}
+
+.tag {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.open {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.pending {
+    background: #fef3c7;
+    color: #a16207;
+}
+
+.selected {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.rejected {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    padding: 15px;
+}
+
+.modal-content {
+    background: white;
+    width: 430px;
+    max-width: 100%;
+    padding: 27px;
+    border-radius: 13px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    margin: 8px 0 15px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cancel {
+    background: #e9edf5;
+}
+
+.delete-btn {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    text-align: center;
+    color: #8791a5;
+    padding: 20px;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media(max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        width: 65px;
+        padding: 15px 7px;
+        overflow: hidden;
+    }
+
+    .sidebar .logo {
+        font-size: 12px;
+        overflow: hidden;
+    }
+
+    .sidebar a {
+        font-size: 0;
+        text-align: center;
+        padding: 14px 5px;
+    }
+
+    .sidebar a::first-letter {
+        font-size: 17px;
+    }
+
+    .sidebar h4 {
+        display: none;
+    }
+
+    .main {
+        margin-left: 65px;
+        padding: 18px 12px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-card h2 {
+        font-size: 23px;
+    }
+
+    .header {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .profile {
+        font-size: 11px;
+    }
+
+    .search-area {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="logo">Campus<span>Connect</span></div>
+
+    <h4>PLACEMENT MENU</h4>
+
+    <a class="active" onclick="showTab('dashboard',this)">🏠 Dashboard</a>
+    <a onclick="showTab('jobs',this)">💼 Job Postings</a>
+    <a onclick="showTab('applications',this)">📄 Applications</a>
+    <a onclick="showTab('students',this)">🎓 Students</a>
+    <a onclick="showTab('companies',this)">🏢 Companies</a>
+    <a onclick="showTab('reports',this)">📊 Reports</a>
+
+    <h4>ACCOUNT</h4>
+    <a onclick="alert('Settings will be available soon.')">⚙️ Settings</a>
+    <a onclick="alert('Please connect authentication for logout.')">🚪 Logout</a>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="header">
+        <div>
+            <h1 id="pageTitle">Placement Dashboard</h1>
+            <p>Manage campus recruitment and student placements.</p>
+        </div>
+        <div class="profile">👤 Placement Admin</div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="tab">
+
+        <div class="stats">
+            <div class="stat-card">
+                <p>Total Students</p>
+                <h2 id="totalStudents">500</h2>
+                <small>Registered students</small>
+            </div>
+
+            <div class="stat-card">
+                <p>Companies</p>
+                <h2 id="totalCompanies">25</h2>
+                <small>Recruiting companies</small>
+            </div>
+
+            <div class="stat-card">
+                <p>Active Jobs</p>
+                <h2 id="totalJobs">0</h2>
+                <small>Currently available</small>
+            </div>
+
+            <div class="stat-card">
+                <p>Students Placed</p>
+                <h2 id="totalPlaced">0</h2>
+                <small>Selected candidates</small>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Recent Job Opportunities</h3>
+                <button class="primary" onclick="showTab('jobs')">
+                    View All
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Job Role</th>
+                            <th>Package</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentJobs"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Placement Overview</h3>
+            <p style="color:#78849a;margin-top:12px">
+                Track job opportunities, student applications and recruitment progress
+                from one dashboard.
+            </p>
+        </div>
+    </div>
+
+    <!-- JOB POSTINGS -->
+    <div id="jobs" class="tab hidden">
+        <div class="section">
+
+            <div class="section-header">
+                <h3>Available Job Opportunities</h3>
+                <button class="primary" onclick="openModal()">
+                    + Add New Job
+                </button>
+            </div>
+
+            <div class="search-area">
+                <input id="jobSearch" placeholder="Search company or job role..."
+                       oninput="renderJobs()">
+
+                <select id="jobFilter" onchange="renderJobs()">
+                    <option value="">All Jobs</option>
+                    <option value="Open">Open</option>
+                    <option value="Closed">Closed</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Job Role</th>
+                            <th>Package</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATIONS -->
+    <div id="applications" class="tab hidden">
+        <div class="section">
+            <h3>Student Applications</h3>
+
+            <div class="search-area" style="margin-top:20px">
+                <input id="applicationSearch"
+                       placeholder="Search student or company..."
+                       oninput="renderApplications()">
+
+                <select id="statusFilter" onchange="renderApplications()">
+                    <option value="">All Status</option>
+                    <option>Pending</option>
+                    <option>Selected</option>
+                    <option>Rejected</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+                            <th>Company</th>
+                            <th>Job Role</th>
+                            <th>Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENTS -->
+    <div id="students" class="tab hidden">
+        <div class="section">
+            <h3>Student Placement Records</h3>
+            <p style="color:#78849a;margin:12px 0">
+                View student placement information and application history.
+            </p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+                            <th>Department</th>
+                            <th>Applications</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPANIES -->
+    <div id="companies" class="tab hidden">
+        <div class="section">
+            <h3>Recruiting Companies</h3>
+            <div class="table-wrap" style="margin-top:20px">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Open Positions</th>
+                            <th>Highest Package</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companyList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="reports" class="tab hidden">
+        <div class="section">
+            <h3>Placement Reports</h3>
+            <div class="stats" style="margin-top:20px">
+                <div class="stat-card">
+                    <p>Total Applications</p>
+                    <h2 id="reportApplications">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p>Selected Students</p>
+                    <h2 id="reportSelected">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p>Pending Applications</p>
+                    <h2 id="reportPending">0</h2>
+                </div>
+                <div class="stat-card">
+                    <p>Rejected Applications</p>
+                    <h2 id="reportRejected">0</h2>
+                </div>
+            </div>
+            <button class="primary" onclick="downloadReport()">
+                Download CSV Report
+            </button>
+        </div>
+    </div>
+
+    <footer>© 2026 CampusConnect | Smart Campus Management System</footer>
+
+</main>
+
+<!-- ADD JOB MODAL -->
+<div class="modal" id="jobModal">
+    <div class="modal-content">
+        <h2>Add New Job</h2>
+
+        <form id="jobForm">
+            <label>Company Name</label>
+            <input id="companyInput" placeholder="Enter company name" required>
+
+            <label>Job Role</label>
+            <input id="roleInput" placeholder="Enter job role" required>
+
+            <label>Package (LPA)</label>
+            <input id="packageInput" type="number" min="0.1"
+                   step="0.1" placeholder="Example: 5.5" required>
+
+            <label>Application Deadline</label>
+            <input id="deadlineInput" type="date" required>
+
+            <label>Job Status</label>
+            <select id="statusInput">
+                <option>Open</option>
+                <option>Closed</option>
+            </select>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel"
+                        onclick="closeModal()">Cancel</button>
+                <button type="submit" class="primary">Save Job</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+
+// Initial sample data
+let jobs = [
+    {id:1, company:"TCS", role:"Software Developer", package:4.5, deadline:"2026-12-10", status:"Open"},
+    {id:2, company:"Infosys", role:"Python Developer", package:6, deadline:"2026-12-15", status:"Open"},
+    {id:3, company:"Wipro", role:"Java Developer", package:5, deadline:"2026-12-20", status:"Open"},
+    {id:4, company:"Accenture", role:"Analyst", package:4, deadline:"2026-11-20", status:"Closed"}
+];
+
+let applications = [
+    {name:"Rahul", roll:"CSE001", company:"TCS", role:"Software Developer", status:"Pending"},
+    {name:"Priya", roll:"CSE002", company:"Infosys", role:"Python Developer", status:"Selected"},
+    {name:"Anjali", roll:"CSE003", company:"Wipro", role:"Java Developer", status:"Pending"},
+    {name:"Kiran", roll:"CSE004", company:"TCS", role:"Software Developer", status:"Rejected"}
+];
+
+let students = [
+    {name:"Rahul", roll:"CSE001", dept:"CSE"},
+    {name:"Priya", roll:"CSE002", dept:"CSE"},
+    {name:"Anjali", roll:"CSE003", dept:"IT"},
+    {name:"Kiran", roll:"CSE004", dept:"ECE"}
+];
+
+// Navigation
+function showTab(tab, element) {
+    document.querySelectorAll(".tab").forEach(t =>
+        t.classList.add("hidden")
+    );
+
+    document.getElementById(tab).classList.remove("hidden");
+
+    document.querySelectorAll(".sidebar a").forEach(a =>
+        a.classList.remove("active")
+    );
+
+    if(element) element.classList.add("active");
+
+    const titles = {
+        dashboard:"Placement Dashboard",
+        jobs:"Job Postings",
+        applications:"Student Applications",
+        students:"Student Records",
+        companies:"Recruiting Companies",
+        reports:"Placement Reports"
+    };
+
+    document.getElementById("pageTitle").innerText = titles[tab];
+    refreshAll();
+}
+
+// Modal
+function openModal() {
+    document.getElementById("jobModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("jobModal").style.display = "none";
+}
+
+// Add job
+document.getElementById("jobForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const deadline = document.getElementById("deadlineInput").value;
+
+    if(deadline < new Date().toISOString().split("T")[0]) {
+        alert("Please select a future deadline.");
+        return;
+    }
+
+    jobs.push({
+        id: Date.now(),
+        company: document.getElementById("companyInput").value.trim(),
+        role: document.getElementById("roleInput").value.trim(),
+        package: Number(document.getElementById("packageInput").value),
+        deadline: deadline,
+        status: document.getElementById("statusInput").value
+    });
+
+    this.reset();
+    closeModal();
+    refreshAll();
+    alert("Job added successfully!");
+});
+
+// Render jobs
+function renderJobs() {
+    const search = document.getElementById("jobSearch").value.toLowerCase();
+    const filter = document.getElementById("jobFilter").value;
+
+    const filtered = jobs.filter(j =>
+        (j.company.toLowerCase().includes(search) ||
+         j.role.toLowerCase().includes(search)) &&
+        (!filter || j.status === filter)
+    );
+
+    document.getElementById("jobList").innerHTML =
+        filtered.map(j => `
+        <tr>
+            <td class="company">${escapeHTML(j.company)}</td>
+            <td>${escapeHTML(j.role)}</td>
+            <td>${j.package} LPA</td>
+            <td>${escapeHTML(j.deadline)}</td>
+            <td><span class="tag ${j.status==="Open"?"open":"rejected"}">${j.status}</span></td>
+            <td><button class="delete-btn" onclick="deleteJob(${j.id})">Delete</button></td>
+        </tr>`).join("") ||
+        `<tr><td colspan="6">No jobs found.</td></tr>`;
+}
+
+// Delete job
+function deleteJob(id) {
+    const job = jobs.find(j => j.id === id);
+    if(!job) return;
+
+    if(!confirm("Delete this job posting?")) return;
+
+    jobs = jobs.filter(j => j.id !== id);
+    refreshAll();
+}
+
+// Applications
+function renderApplications() {
+    const search = document.getElementById("applicationSearch").value.toLowerCase();
+    const filter = document.getElementById("statusFilter").value;
+
+    const filtered = applications.filter(a =>
+        (a.name.toLowerCase().includes(search) ||
+         a.company.toLowerCase().includes(search) ||
+         a.roll.toLowerCase().includes(search)) &&
+        (!filter || a.status === filter)
+    );
+
+    document.getElementById("applicationList").innerHTML =
+        filtered.map(a => {
+            const index = applications.indexOf(a);
+            return `
+            <tr>
+                <td>${escapeHTML(a.name)}</td>
+                <td>${escapeHTML(a.roll)}</td>
+                <td>${escapeHTML(a.company)}</td>
+                <td>${escapeHTML(a.role)}</td>
+                <td><span class="tag ${a.status.toLowerCase()}">${a.status}</span></td>
+                <td>
+                    <select onchange="updateStatus(${index},this.value)">
+                        <option ${a.status==="Pending"?"selected":""}>Pending</option>
+                        <option ${a.status==="Selected"?"selected":""}>Selected</option>
+                        <option ${a.status==="Rejected"?"selected":""}>Rejected</option>
+                    </select>
+                </td>
+            </tr>`;
+        }).join("") || `<tr><td colspan="6">No applications found.</td></tr>`;
+}
+
+function updateStatus(index, status) {
+    applications[index].status = status;
+    refreshAll();
+}
+
+// Students
+function renderStudents() {
+    document.getElementById("studentList").innerHTML =
+        students.map(s => `
+        <tr>
+            <td>${escapeHTML(s.name)}</td>
+            <td>${escapeHTML(s.roll)}</td>
+            <td>${escapeHTML(s.dept)}</td>
+            <td>${applications.filter(a => a.roll === s.roll).length}</td>
+        </tr>`).join("");
+}
+
+// Companies
+function renderCompanies() {
+    const companies = [...new Set(jobs.map(j => j.company))];
+
+    document.getElementById("companyList").innerHTML =
+        companies.map(c => {
+            const companyJobs = jobs.filter(j => j.company === c);
+            return `
+            <tr>
+                <td>${escapeHTML(c)}</td>
+                <td>${companyJobs.filter(j => j.status === "Open").length}</td>
+                <td>${Math.max(...companyJobs.map(j => j.package))} LPA</td>
+            </tr>`;
+        }).join("") || `<tr><td colspan="3">No companies found.</td></tr>`;
+}
+
+// Dashboard
+function renderDashboard() {
+    document.getElementById("totalJobs").innerText =
+        jobs.filter(j => j.status === "Open").length;
+
+    document.getElementById("totalPlaced").innerText =
+        applications.filter(a => a.status === "Selected").length;
+
+    document.getElementById("totalCompanies").innerText =
+        new Set(jobs.map(j => j.company)).size;
+
+    document.getElementById("totalStudents").innerText = students.length;
+
+    document.getElementById("recentJobs").innerHTML =
+        jobs.slice(-5).reverse().map(j => `
+        <tr>
+            <td class="company">${escapeHTML(j.company)}</td>
+            <td>${escapeHTML(j.role)}</td>
+            <td>${j.package} LPA</td>
+            <td>${escapeHTML(j.deadline)}</td>
+            <td><span class="tag ${j.status==="Open"?"open":"rejected"}">${j.status}</span></td>
+        </tr>`).join("") ||
+        `<tr><td colspan="5">No job postings available.</td></tr>`;
+}
+
+// Reports
+function renderReports() {
+    document.getElementById("reportApplications").innerText = applications.length;
+    document.getElementById("reportSelected").innerText =
+        applications.filter(a => a.status === "Selected").length;
+    document.getElementById("reportPending").innerText =
+        applications.filter(a => a.status === "Pending").length;
+    document.getElementById("reportRejected").innerText =
+        applications.filter(a => a.status === "Rejected").length;
+}
+
+// CSV download
+function downloadReport() {
+    const rows = [
+        ["Student Name","Roll Number","Company","Job Role","Status"],
+        ...applications.map(a => [a.name,a.roll,a.company,a.role,a.status])
+    ];
+
+    const csv = rows.map(row =>
+        row.map(value => `"${String(value).replace(/"/g,'""')}"`).join(",")
+    ).join("\n");
+
+    const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "placement_report.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+}
+
+// Prevent HTML injection in user-entered values
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+    })[char]);
+}
+
+// Refresh all screens
+function refreshAll() {
+    renderJobs();
+    renderApplications();
+    renderStudents();
+    renderCompanies();
+    renderDashboard();
+    renderReports();
+}
+
+// Initial load
+refreshAll();
+
+</script>
+</body>
+</html>
