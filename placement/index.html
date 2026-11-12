@@ -1,0 +1,713 @@
+<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examination Management | Smart Campus</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #1e293b;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #14213d;
+    color: white;
+    padding: 25px 18px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+.sidebar h4 {
+    color: #94a3b8;
+    font-size: 12px;
+    margin: 20px 10px 12px;
+    text-transform: uppercase;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 13px 12px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 25px 30px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 24px;
+}
+
+.profile {
+    background: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Dashboard cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #00000008;
+}
+
+.card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.card h2 {
+    margin-top: 12px;
+    font-size: 28px;
+}
+
+.blue { border-left: 4px solid #2563eb; }
+.green { border-left: 4px solid #16a34a; }
+.orange { border-left: 4px solid #f59e0b; }
+.purple { border-left: 4px solid #9333ea; }
+
+/* Sections */
+.section {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px #00000008;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.section-header h3 {
+    font-size: 18px;
+}
+
+/* Buttons */
+button {
+    border: none;
+    padding: 11px 17px;
+    background: #2563eb;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.secondary {
+    background: #64748b;
+}
+
+/* Table */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 15px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
+}
+
+th {
+    color: #64748b;
+    background: #f8fafc;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.upcoming {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.draft {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* Form */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Activity */
+.activity {
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
+}
+
+.activity small {
+    display: block;
+    margin-top: 5px;
+    color: #64748b;
+}
+
+/* Hidden pages */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Responsive */
+@media(max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .container {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .main {
+        padding: 18px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+
+    <div class="logo">Smart<span>Campus</span></div>
+
+    <h4>Main Menu</h4>
+
+    <a class="active" onclick="showPage('dashboard',this)">▦ Dashboard</a>
+    <a onclick="showPage('exams',this)">▣ Exam Management</a>
+    <a onclick="showPage('subjects',this)">▤ Subjects</a>
+    <a onclick="showPage('schedule',this)">▦ Exam Schedule</a>
+    <a onclick="showPage('marks',this)">✎ Marks Management</a>
+    <a onclick="showPage('results',this)">🏆 Results</a>
+    <a onclick="showPage('reports',this)">▥ Reports</a>
+
+    <h4>Account</h4>
+    <a onclick="alert('Profile section coming soon')">♙ My Profile</a>
+    <a onclick="alert('Logout functionality requires authentication')">↪ Logout</a>
+
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+
+    <div class="topbar">
+        <div>
+            <h2>Examination Management</h2>
+            <p style="color:#64748b;margin-top:6px;font-size:13px">
+                Smart Campus Management System
+            </p>
+        </div>
+
+        <div class="profile">
+            Admin / Faculty
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="page active">
+
+        <div class="cards">
+
+            <div class="card blue">
+                <p>Total Examinations</p>
+                <h2 id="totalExams">12</h2>
+            </div>
+
+            <div class="card orange">
+                <p>Upcoming Exams</p>
+                <h2 id="upcomingExams">5</h2>
+            </div>
+
+            <div class="card green">
+                <p>Completed Exams</p>
+                <h2 id="completedExams">6</h2>
+            </div>
+
+            <div class="card purple">
+                <p>Pending Results</p>
+                <h2 id="pendingResults">3</h2>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Upcoming Examinations</h3>
+                <button onclick="showPage('exams')">View All</button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="dashboardTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Recent Activity</h3>
+
+            <div class="activity">
+                Examination schedule updated
+                <small>Today, 10:30 AM</small>
+            </div>
+
+            <div class="activity">
+                New subject added
+                <small>Yesterday, 2:15 PM</small>
+            </div>
+
+            <div class="activity">
+                Marks submitted by faculty
+                <small>Yesterday, 11:00 AM</small>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Exam Management -->
+    <div id="exams" class="page">
+
+        <div class="section">
+            <div class="section-header">
+                <h3>Manage Examinations</h3>
+                <button onclick="document.getElementById('examForm').scrollIntoView({behavior:'smooth'})">
+                    + Add Examination
+                </button>
+            </div>
+
+            <input id="searchExam"
+                placeholder="Search examination..."
+                oninput="renderExams()"
+                style="padding:11px;width:100%;max-width:350px;border:1px solid #cbd5e1;border-radius:7px;margin-bottom:18px">
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="examTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="examForm">
+            <h3 style="margin-bottom:20px">Create New Examination</h3>
+
+            <form id="createExam">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Examination Name</label>
+                        <input id="examName" required placeholder="Enter exam name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Academic Year</label>
+                        <input id="academicYear" required placeholder="2026-2027">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option>CSE</option>
+                            <option>ECE</option>
+                            <option>EEE</option>
+                            <option>MECH</option>
+                            <option>CIVIL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Semester</label>
+                        <select id="semester" required>
+                            <option value="">Select Semester</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Exam Type</label>
+                        <select id="examType" required>
+                            <option value="">Select Type</option>
+                            <option>Internal Assessment</option>
+                            <option>Mid-Term</option>
+                            <option>Semester-End</option>
+                            <option>Practical</option>
+                            <option>Supplementary</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Maximum Marks</label>
+                        <input type="number" id="maxMarks" required min="1" placeholder="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" id="endDate" required>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Create Examination</button>
+                    <button type="reset" class="secondary">Clear</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Other Pages -->
+    <div id="subjects" class="page">
+        <div class="section">
+            <h3>Subject Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Manage subjects, subject codes, semesters and faculty assignments.
+            </p>
+        </div>
+    </div>
+
+    <div id="schedule" class="page">
+        <div class="section">
+            <h3>Exam Scheduling</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Create and manage examination timetables.
+            </p>
+        </div>
+    </div>
+
+    <div id="marks" class="page">
+        <div class="section">
+            <h3>Marks Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Enter, update and submit student examination marks.
+            </p>
+        </div>
+    </div>
+
+    <div id="results" class="page">
+        <div class="section">
+            <h3>Results Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Review, approve and publish examination results.
+            </p>
+        </div>
+    </div>
+
+    <div id="reports" class="page">
+        <div class="section">
+            <h3>Examination Reports</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Generate student-wise, subject-wise and semester-wise reports.
+            </p>
+        </div>
+    </div>
+
+</main>
+</div>
+
+<script>
+
+// Sample data for interface demonstration
+let exams = [
+    {
+        name:"Mid-Term Examination",
+        department:"CSE",
+        semester:"5",
+        date:"2026-12-10",
+        status:"Upcoming"
+    },
+    {
+        name:"Internal Assessment 2",
+        department:"ECE",
+        semester:"4",
+        date:"2026-11-15",
+        status:"Upcoming"
+    },
+    {
+        name:"Semester Examination",
+        department:"CSE",
+        semester:"6",
+        date:"2026-10-20",
+        status:"Completed"
+    }
+];
+
+// Navigation
+function showPage(page, element) {
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+    });
+
+    document.getElementById(page).classList.add('active');
+
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.classList.remove('active');
+    });
+
+    if(element) element.classList.add('active');
+}
+
+// Status badge
+function getStatus(status) {
+    let className = status.toLowerCase();
+    return `<span class="status ${className}">${status}</span>`;
+}
+
+// Render examination table
+function renderExams() {
+
+    let search = document.getElementById('searchExam')
+        .value.toLowerCase();
+
+    let filtered = exams.filter(e =>
+        e.name.toLowerCase().includes(search) ||
+        e.department.toLowerCase().includes(search)
+    );
+
+    document.getElementById('examTable').innerHTML =
+        filtered.map(e => `
+        <tr>
+            <td>${e.name}</td>
+            <td>${e.department}</td>
+            <td>${e.semester}</td>
+            <td>${e.date}</td>
+            <td>${getStatus(e.status)}</td>
+            <td>
+                <button class="secondary"
+                onclick="alert('Connect edit functionality to backend')">
+                View
+                </button>
+            </td>
+        </tr>
+        `).join('');
+}
+
+// Dashboard table
+function renderDashboard() {
+    document.getElementById('dashboardTable').innerHTML =
+        exams.slice(0,5).map(e => `
+        <tr>
+            <td>${e.name}</td>
+            <td>${e.department}</td>
+            <td>${e.semester}</td>
+            <td>${e.date}</td>
+            <td>${getStatus(e.status)}</td>
+        </tr>
+        `).join('');
+}
+
+// Create examination
+document.getElementById('createExam')
+.addEventListener('submit', function(event) {
+
+    event.preventDefault();
+
+    let start = document.getElementById('startDate').value;
+    let end = document.getElementById('endDate').value;
+
+    if(end < start) {
+        alert("End date cannot be earlier than start date");
+        return;
+    }
+
+    let exam = {
+        name:document.getElementById('examName').value,
+        department:document.getElementById('department').value,
+        semester:document.getElementById('semester').value,
+        date:start,
+        status:"Draft"
+    };
+
+    exams.push(exam);
+
+    renderExams();
+    renderDashboard();
+
+    this.reset();
+
+    alert("Examination created successfully!");
+});
+
+// Initial rendering
+renderExams();
+renderDashboard();
+
+</script>
+
+</body>
+</html>
