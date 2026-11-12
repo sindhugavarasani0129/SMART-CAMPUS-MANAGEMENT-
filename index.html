@@ -4,124 +4,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CampusConnect | Placement Management</title>
+<title>Examination Management | Smart Campus</title>
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    background: #f4f6fb;
-    color: #202943;
+    background: #f4f7fb;
+    color: #1e293b;
 }
 
 /* Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
 .sidebar {
-    width: 245px;
-    height: 100vh;
-    background: #18243d;
+    width: 250px;
+    background: #14213d;
     color: white;
-    position: fixed;
     padding: 25px 18px;
+    flex-shrink: 0;
 }
 
 .logo {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 .logo span {
-    color: #65b6ff;
+    color: #38bdf8;
 }
 
 .sidebar h4 {
-    color: #8492aa;
-    font-size: 11px;
-    margin: 25px 12px 12px;
-    letter-spacing: 1px;
+    color: #94a3b8;
+    font-size: 12px;
+    margin: 20px 10px 12px;
+    text-transform: uppercase;
 }
 
 .sidebar a {
     display: block;
-    padding: 13px 14px;
     color: #cbd5e1;
     text-decoration: none;
-    border-radius: 8px;
+    padding: 13px 12px;
     margin-bottom: 7px;
+    border-radius: 7px;
+    font-size: 14px;
     cursor: pointer;
 }
 
 .sidebar a:hover,
 .sidebar a.active {
-    background: #30486e;
+    background: #2563eb;
     color: white;
 }
 
+/* Main */
 .main {
-    margin-left: 245px;
-    padding: 28px 35px;
+    flex: 1;
+    min-width: 0;
+    padding: 25px 30px;
 }
 
-/* Header */
-.header {
+.topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    gap: 15px;
 }
 
-.header p {
-    color: #7b8498;
-    margin-top: 6px;
+.topbar h2 {
+    font-size: 24px;
 }
 
 .profile {
     background: white;
-    padding: 10px 17px;
-    border-radius: 10px;
-    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
-/* Statistics */
-.stats {
+/* Dashboard cards */
+.cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
     margin-bottom: 28px;
 }
 
-.stat-card {
+.card {
     background: white;
-    padding: 23px;
-    border-radius: 13px;
-    box-shadow: 0 3px 12px #1725540a;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #00000008;
 }
 
-.stat-card p {
-    color: #7c879b;
+.card p {
+    color: #64748b;
     font-size: 14px;
 }
 
-.stat-card h2 {
-    font-size: 29px;
+.card h2 {
     margin-top: 12px;
+    font-size: 28px;
 }
 
-.stat-card small {
-    color: #16a36a;
-}
+.blue { border-left: 4px solid #2563eb; }
+.green { border-left: 4px solid #16a34a; }
+.orange { border-left: 4px solid #f59e0b; }
+.purple { border-left: 4px solid #9333ea; }
 
-/* Content */
+/* Sections */
 .section {
     background: white;
-    border-radius: 13px;
-    padding: 23px;
+    border-radius: 12px;
+    padding: 22px;
     margin-bottom: 25px;
+    box-shadow: 0 2px 8px #00000008;
 }
 
 .section-header {
@@ -129,48 +138,38 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
+.section-header h3 {
+    font-size: 18px;
+}
+
+/* Buttons */
 button {
     border: none;
     padding: 11px 17px;
+    background: #2563eb;
+    color: white;
     border-radius: 7px;
     cursor: pointer;
-    font-weight: 600;
+    font-size: 13px;
 }
 
-.primary {
-    background: #2765d8;
-    color: white;
+button:hover {
+    background: #1d4ed8;
 }
 
-.primary:hover {
-    background: #164eb5;
+.secondary {
+    background: #64748b;
 }
 
-.search-area {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
+/* Table */
+.table-wrap {
+    overflow-x: auto;
 }
 
-input, select {
-    padding: 11px;
-    border: 1px solid #dce2ed;
-    border-radius: 7px;
-    outline: none;
-    background: white;
-}
-
-input:focus, select:focus {
-    border-color: #2765d8;
-}
-
-.search-area input {
-    flex: 1;
-}
-
-/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -180,169 +179,123 @@ table {
 th, td {
     padding: 15px 12px;
     text-align: left;
-    border-bottom: 1px solid #edf0f5;
-    font-size: 14px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 13px;
 }
 
 th {
-    color: #78849a;
-    background: #f8f9fc;
+    color: #64748b;
+    background: #f8fafc;
 }
 
-.company {
-    font-weight: 600;
-}
-
-.tag {
-    padding: 5px 10px;
+.status {
+    padding: 6px 10px;
     border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: bold;
 }
 
-.open {
-    background: #dcfce7;
-    color: #15803d;
-}
-
-.pending {
-    background: #fef3c7;
-    color: #a16207;
-}
-
-.selected {
+.upcoming {
     background: #dbeafe;
     color: #1d4ed8;
 }
 
-.rejected {
-    background: #fee2e2;
-    color: #b91c1c;
+.completed {
+    background: #dcfce7;
+    color: #15803d;
 }
 
-.table-wrap {
-    overflow-x: auto;
+.draft {
+    background: #fef3c7;
+    color: #92400e;
 }
 
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #0008;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    padding: 15px;
+/* Form */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
 }
 
-.modal-content {
-    background: white;
-    width: 430px;
-    max-width: 100%;
-    padding: 27px;
-    border-radius: 13px;
-    max-height: 90vh;
-    overflow-y: auto;
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
-.modal-content h2 {
-    margin-bottom: 20px;
-}
-
-.modal-content input,
-.modal-content select {
+.form-group input,
+.form-group select {
     width: 100%;
-    margin: 8px 0 15px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    outline: none;
 }
 
-.modal-actions {
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+}
+
+.form-actions {
+    margin-top: 20px;
     display: flex;
-    justify-content: flex-end;
     gap: 10px;
 }
 
-.cancel {
-    background: #e9edf5;
-}
-
-.delete-btn {
-    color: #dc2626;
-    background: #fee2e2;
-}
-
-.hidden {
-    display: none !important;
-}
-
-footer {
-    text-align: center;
-    color: #8791a5;
-    padding: 20px;
+/* Activity */
+.activity {
+    padding: 14px 0;
+    border-bottom: 1px solid #e2e8f0;
     font-size: 13px;
+}
+
+.activity small {
+    display: block;
+    margin-top: 5px;
+    color: #64748b;
+}
+
+/* Hidden pages */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
 }
 
 /* Responsive */
 @media(max-width: 1000px) {
-    .stats {
+    .cards {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media(max-width: 650px) {
+    .container {
+        display: block;
+    }
+
     .sidebar {
-        width: 65px;
-        padding: 15px 7px;
-        overflow: hidden;
-    }
-
-    .sidebar .logo {
-        font-size: 12px;
-        overflow: hidden;
-    }
-
-    .sidebar a {
-        font-size: 0;
-        text-align: center;
-        padding: 14px 5px;
-    }
-
-    .sidebar a::first-letter {
-        font-size: 17px;
-    }
-
-    .sidebar h4 {
-        display: none;
+        width: 100%;
     }
 
     .main {
-        margin-left: 65px;
-        padding: 18px 12px;
+        padding: 18px;
     }
 
-    .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 9px;
+    .cards {
+        grid-template-columns: 1fr;
     }
 
-    .stat-card {
-        padding: 14px;
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
-    .stat-card h2 {
-        font-size: 23px;
-    }
-
-    .header {
+    .topbar {
         align-items: flex-start;
-        gap: 10px;
-    }
-
-    .profile {
-        font-size: 11px;
-    }
-
-    .search-area {
         flex-direction: column;
     }
 }
@@ -351,548 +304,410 @@ footer {
 
 <body>
 
-<!-- SIDEBAR -->
+<div class="container">
+
+<!-- Sidebar -->
 <aside class="sidebar">
-    <div class="logo">Campus<span>Connect</span></div>
 
-    <h4>PLACEMENT MENU</h4>
+    <div class="logo">Smart<span>Campus</span></div>
 
-    <a class="active" onclick="showTab('dashboard',this)">🏠 Dashboard</a>
-    <a onclick="showTab('jobs',this)">💼 Job Postings</a>
-    <a onclick="showTab('applications',this)">📄 Applications</a>
-    <a onclick="showTab('students',this)">🎓 Students</a>
-    <a onclick="showTab('companies',this)">🏢 Companies</a>
-    <a onclick="showTab('reports',this)">📊 Reports</a>
+    <h4>Main Menu</h4>
 
-    <h4>ACCOUNT</h4>
-    <a onclick="alert('Settings will be available soon.')">⚙️ Settings</a>
-    <a onclick="alert('Please connect authentication for logout.')">🚪 Logout</a>
+    <a class="active" onclick="showPage('dashboard',this)">▦ Dashboard</a>
+    <a onclick="showPage('exams',this)">▣ Exam Management</a>
+    <a onclick="showPage('subjects',this)">▤ Subjects</a>
+    <a onclick="showPage('schedule',this)">▦ Exam Schedule</a>
+    <a onclick="showPage('marks',this)">✎ Marks Management</a>
+    <a onclick="showPage('results',this)">🏆 Results</a>
+    <a onclick="showPage('reports',this)">▥ Reports</a>
+
+    <h4>Account</h4>
+    <a onclick="alert('Profile section coming soon')">♙ My Profile</a>
+    <a onclick="alert('Logout functionality requires authentication')">↪ Logout</a>
+
 </aside>
 
-<!-- MAIN -->
+<!-- Main Content -->
 <main class="main">
 
-    <div class="header">
+    <div class="topbar">
         <div>
-            <h1 id="pageTitle">Placement Dashboard</h1>
-            <p>Manage campus recruitment and student placements.</p>
+            <h2>Examination Management</h2>
+            <p style="color:#64748b;margin-top:6px;font-size:13px">
+                Smart Campus Management System
+            </p>
         </div>
-        <div class="profile">👤 Placement Admin</div>
+
+        <div class="profile">
+            Admin / Faculty
+        </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="tab">
+    <!-- Dashboard -->
+    <div id="dashboard" class="page active">
 
-        <div class="stats">
-            <div class="stat-card">
-                <p>Total Students</p>
-                <h2 id="totalStudents">500</h2>
-                <small>Registered students</small>
+        <div class="cards">
+
+            <div class="card blue">
+                <p>Total Examinations</p>
+                <h2 id="totalExams">12</h2>
             </div>
 
-            <div class="stat-card">
-                <p>Companies</p>
-                <h2 id="totalCompanies">25</h2>
-                <small>Recruiting companies</small>
+            <div class="card orange">
+                <p>Upcoming Exams</p>
+                <h2 id="upcomingExams">5</h2>
             </div>
 
-            <div class="stat-card">
-                <p>Active Jobs</p>
-                <h2 id="totalJobs">0</h2>
-                <small>Currently available</small>
+            <div class="card green">
+                <p>Completed Exams</p>
+                <h2 id="completedExams">6</h2>
             </div>
 
-            <div class="stat-card">
-                <p>Students Placed</p>
-                <h2 id="totalPlaced">0</h2>
-                <small>Selected candidates</small>
+            <div class="card purple">
+                <p>Pending Results</p>
+                <h2 id="pendingResults">3</h2>
             </div>
+
         </div>
 
         <div class="section">
             <div class="section-header">
-                <h3>Recent Job Opportunities</h3>
-                <button class="primary" onclick="showTab('jobs')">
-                    View All
-                </button>
+                <h3>Upcoming Examinations</h3>
+                <button onclick="showPage('exams')">View All</button>
             </div>
 
             <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
-                            <th>Company</th>
-                            <th>Job Role</th>
-                            <th>Package</th>
-                            <th>Deadline</th>
+                            <th>Exam Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Date</th>
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody id="recentJobs"></tbody>
+
+                    <tbody id="dashboardTable"></tbody>
                 </table>
             </div>
         </div>
 
         <div class="section">
-            <h3>Placement Overview</h3>
-            <p style="color:#78849a;margin-top:12px">
-                Track job opportunities, student applications and recruitment progress
-                from one dashboard.
-            </p>
+            <h3>Recent Activity</h3>
+
+            <div class="activity">
+                Examination schedule updated
+                <small>Today, 10:30 AM</small>
+            </div>
+
+            <div class="activity">
+                New subject added
+                <small>Yesterday, 2:15 PM</small>
+            </div>
+
+            <div class="activity">
+                Marks submitted by faculty
+                <small>Yesterday, 11:00 AM</small>
+            </div>
         </div>
+
     </div>
 
-    <!-- JOB POSTINGS -->
-    <div id="jobs" class="tab hidden">
-        <div class="section">
+    <!-- Exam Management -->
+    <div id="exams" class="page">
 
+        <div class="section">
             <div class="section-header">
-                <h3>Available Job Opportunities</h3>
-                <button class="primary" onclick="openModal()">
-                    + Add New Job
+                <h3>Manage Examinations</h3>
+                <button onclick="document.getElementById('examForm').scrollIntoView({behavior:'smooth'})">
+                    + Add Examination
                 </button>
             </div>
 
-            <div class="search-area">
-                <input id="jobSearch" placeholder="Search company or job role..."
-                       oninput="renderJobs()">
-
-                <select id="jobFilter" onchange="renderJobs()">
-                    <option value="">All Jobs</option>
-                    <option value="Open">Open</option>
-                    <option value="Closed">Closed</option>
-                </select>
-            </div>
+            <input id="searchExam"
+                placeholder="Search examination..."
+                oninput="renderExams()"
+                style="padding:11px;width:100%;max-width:350px;border:1px solid #cbd5e1;border-radius:7px;margin-bottom:18px">
 
             <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
-                            <th>Company</th>
-                            <th>Job Role</th>
-                            <th>Package</th>
-                            <th>Deadline</th>
+                            <th>Exam Name</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th>Date</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="jobList"></tbody>
+
+                    <tbody id="examTable"></tbody>
                 </table>
             </div>
         </div>
-    </div>
 
-    <!-- APPLICATIONS -->
-    <div id="applications" class="tab hidden">
-        <div class="section">
-            <h3>Student Applications</h3>
+        <div class="section" id="examForm">
+            <h3 style="margin-bottom:20px">Create New Examination</h3>
 
-            <div class="search-area" style="margin-top:20px">
-                <input id="applicationSearch"
-                       placeholder="Search student or company..."
-                       oninput="renderApplications()">
+            <form id="createExam">
 
-                <select id="statusFilter" onchange="renderApplications()">
-                    <option value="">All Status</option>
-                    <option>Pending</option>
-                    <option>Selected</option>
-                    <option>Rejected</option>
-                </select>
-            </div>
+                <div class="form-grid">
 
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Roll Number</th>
-                            <th>Company</th>
-                            <th>Job Role</th>
-                            <th>Status</th>
-                            <th>Update Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="applicationList"></tbody>
-                </table>
-            </div>
+                    <div class="form-group">
+                        <label>Examination Name</label>
+                        <input id="examName" required placeholder="Enter exam name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Academic Year</label>
+                        <input id="academicYear" required placeholder="2026-2027">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="department" required>
+                            <option value="">Select Department</option>
+                            <option>CSE</option>
+                            <option>ECE</option>
+                            <option>EEE</option>
+                            <option>MECH</option>
+                            <option>CIVIL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Semester</label>
+                        <select id="semester" required>
+                            <option value="">Select Semester</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Exam Type</label>
+                        <select id="examType" required>
+                            <option value="">Select Type</option>
+                            <option>Internal Assessment</option>
+                            <option>Mid-Term</option>
+                            <option>Semester-End</option>
+                            <option>Practical</option>
+                            <option>Supplementary</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Maximum Marks</label>
+                        <input type="number" id="maxMarks" required min="1" placeholder="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="startDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" id="endDate" required>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Create Examination</button>
+                    <button type="reset" class="secondary">Clear</button>
+                </div>
+
+            </form>
         </div>
+
     </div>
 
-    <!-- STUDENTS -->
-    <div id="students" class="tab hidden">
+    <!-- Other Pages -->
+    <div id="subjects" class="page">
         <div class="section">
-            <h3>Student Placement Records</h3>
-            <p style="color:#78849a;margin:12px 0">
-                View student placement information and application history.
+            <h3>Subject Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Manage subjects, subject codes, semesters and faculty assignments.
             </p>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Roll Number</th>
-                            <th>Department</th>
-                            <th>Applications</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentList"></tbody>
-                </table>
-            </div>
         </div>
     </div>
 
-    <!-- COMPANIES -->
-    <div id="companies" class="tab hidden">
+    <div id="schedule" class="page">
         <div class="section">
-            <h3>Recruiting Companies</h3>
-            <div class="table-wrap" style="margin-top:20px">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company Name</th>
-                            <th>Open Positions</th>
-                            <th>Highest Package</th>
-                        </tr>
-                    </thead>
-                    <tbody id="companyList"></tbody>
-                </table>
-            </div>
+            <h3>Exam Scheduling</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Create and manage examination timetables.
+            </p>
         </div>
     </div>
 
-    <!-- REPORTS -->
-    <div id="reports" class="tab hidden">
+    <div id="marks" class="page">
         <div class="section">
-            <h3>Placement Reports</h3>
-            <div class="stats" style="margin-top:20px">
-                <div class="stat-card">
-                    <p>Total Applications</p>
-                    <h2 id="reportApplications">0</h2>
-                </div>
-                <div class="stat-card">
-                    <p>Selected Students</p>
-                    <h2 id="reportSelected">0</h2>
-                </div>
-                <div class="stat-card">
-                    <p>Pending Applications</p>
-                    <h2 id="reportPending">0</h2>
-                </div>
-                <div class="stat-card">
-                    <p>Rejected Applications</p>
-                    <h2 id="reportRejected">0</h2>
-                </div>
-            </div>
-            <button class="primary" onclick="downloadReport()">
-                Download CSV Report
-            </button>
+            <h3>Marks Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Enter, update and submit student examination marks.
+            </p>
         </div>
     </div>
 
-    <footer>© 2026 CampusConnect | Smart Campus Management System</footer>
+    <div id="results" class="page">
+        <div class="section">
+            <h3>Results Management</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Review, approve and publish examination results.
+            </p>
+        </div>
+    </div>
+
+    <div id="reports" class="page">
+        <div class="section">
+            <h3>Examination Reports</h3>
+            <p style="margin-top:15px;color:#64748b">
+                Generate student-wise, subject-wise and semester-wise reports.
+            </p>
+        </div>
+    </div>
 
 </main>
-
-<!-- ADD JOB MODAL -->
-<div class="modal" id="jobModal">
-    <div class="modal-content">
-        <h2>Add New Job</h2>
-
-        <form id="jobForm">
-            <label>Company Name</label>
-            <input id="companyInput" placeholder="Enter company name" required>
-
-            <label>Job Role</label>
-            <input id="roleInput" placeholder="Enter job role" required>
-
-            <label>Package (LPA)</label>
-            <input id="packageInput" type="number" min="0.1"
-                   step="0.1" placeholder="Example: 5.5" required>
-
-            <label>Application Deadline</label>
-            <input id="deadlineInput" type="date" required>
-
-            <label>Job Status</label>
-            <select id="statusInput">
-                <option>Open</option>
-                <option>Closed</option>
-            </select>
-
-            <div class="modal-actions">
-                <button type="button" class="cancel"
-                        onclick="closeModal()">Cancel</button>
-                <button type="submit" class="primary">Save Job</button>
-            </div>
-        </form>
-    </div>
 </div>
 
 <script>
 
-// Initial sample data
-let jobs = [
-    {id:1, company:"TCS", role:"Software Developer", package:4.5, deadline:"2026-12-10", status:"Open"},
-    {id:2, company:"Infosys", role:"Python Developer", package:6, deadline:"2026-12-15", status:"Open"},
-    {id:3, company:"Wipro", role:"Java Developer", package:5, deadline:"2026-12-20", status:"Open"},
-    {id:4, company:"Accenture", role:"Analyst", package:4, deadline:"2026-11-20", status:"Closed"}
-];
-
-let applications = [
-    {name:"Rahul", roll:"CSE001", company:"TCS", role:"Software Developer", status:"Pending"},
-    {name:"Priya", roll:"CSE002", company:"Infosys", role:"Python Developer", status:"Selected"},
-    {name:"Anjali", roll:"CSE003", company:"Wipro", role:"Java Developer", status:"Pending"},
-    {name:"Kiran", roll:"CSE004", company:"TCS", role:"Software Developer", status:"Rejected"}
-];
-
-let students = [
-    {name:"Rahul", roll:"CSE001", dept:"CSE"},
-    {name:"Priya", roll:"CSE002", dept:"CSE"},
-    {name:"Anjali", roll:"CSE003", dept:"IT"},
-    {name:"Kiran", roll:"CSE004", dept:"ECE"}
+// Sample data for interface demonstration
+let exams = [
+    {
+        name:"Mid-Term Examination",
+        department:"CSE",
+        semester:"5",
+        date:"2026-12-10",
+        status:"Upcoming"
+    },
+    {
+        name:"Internal Assessment 2",
+        department:"ECE",
+        semester:"4",
+        date:"2026-11-15",
+        status:"Upcoming"
+    },
+    {
+        name:"Semester Examination",
+        department:"CSE",
+        semester:"6",
+        date:"2026-10-20",
+        status:"Completed"
+    }
 ];
 
 // Navigation
-function showTab(tab, element) {
-    document.querySelectorAll(".tab").forEach(t =>
-        t.classList.add("hidden")
+function showPage(page, element) {
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+    });
+
+    document.getElementById(page).classList.add('active');
+
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.classList.remove('active');
+    });
+
+    if(element) element.classList.add('active');
+}
+
+// Status badge
+function getStatus(status) {
+    let className = status.toLowerCase();
+    return `<span class="status ${className}">${status}</span>`;
+}
+
+// Render examination table
+function renderExams() {
+
+    let search = document.getElementById('searchExam')
+        .value.toLowerCase();
+
+    let filtered = exams.filter(e =>
+        e.name.toLowerCase().includes(search) ||
+        e.department.toLowerCase().includes(search)
     );
 
-    document.getElementById(tab).classList.remove("hidden");
-
-    document.querySelectorAll(".sidebar a").forEach(a =>
-        a.classList.remove("active")
-    );
-
-    if(element) element.classList.add("active");
-
-    const titles = {
-        dashboard:"Placement Dashboard",
-        jobs:"Job Postings",
-        applications:"Student Applications",
-        students:"Student Records",
-        companies:"Recruiting Companies",
-        reports:"Placement Reports"
-    };
-
-    document.getElementById("pageTitle").innerText = titles[tab];
-    refreshAll();
+    document.getElementById('examTable').innerHTML =
+        filtered.map(e => `
+        <tr>
+            <td>${e.name}</td>
+            <td>${e.department}</td>
+            <td>${e.semester}</td>
+            <td>${e.date}</td>
+            <td>${getStatus(e.status)}</td>
+            <td>
+                <button class="secondary"
+                onclick="alert('Connect edit functionality to backend')">
+                View
+                </button>
+            </td>
+        </tr>
+        `).join('');
 }
 
-// Modal
-function openModal() {
-    document.getElementById("jobModal").style.display = "flex";
+// Dashboard table
+function renderDashboard() {
+    document.getElementById('dashboardTable').innerHTML =
+        exams.slice(0,5).map(e => `
+        <tr>
+            <td>${e.name}</td>
+            <td>${e.department}</td>
+            <td>${e.semester}</td>
+            <td>${e.date}</td>
+            <td>${getStatus(e.status)}</td>
+        </tr>
+        `).join('');
 }
 
-function closeModal() {
-    document.getElementById("jobModal").style.display = "none";
-}
+// Create examination
+document.getElementById('createExam')
+.addEventListener('submit', function(event) {
 
-// Add job
-document.getElementById("jobForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    event.preventDefault();
 
-    const deadline = document.getElementById("deadlineInput").value;
+    let start = document.getElementById('startDate').value;
+    let end = document.getElementById('endDate').value;
 
-    if(deadline < new Date().toISOString().split("T")[0]) {
-        alert("Please select a future deadline.");
+    if(end < start) {
+        alert("End date cannot be earlier than start date");
         return;
     }
 
-    jobs.push({
-        id: Date.now(),
-        company: document.getElementById("companyInput").value.trim(),
-        role: document.getElementById("roleInput").value.trim(),
-        package: Number(document.getElementById("packageInput").value),
-        deadline: deadline,
-        status: document.getElementById("statusInput").value
-    });
+    let exam = {
+        name:document.getElementById('examName').value,
+        department:document.getElementById('department').value,
+        semester:document.getElementById('semester').value,
+        date:start,
+        status:"Draft"
+    };
+
+    exams.push(exam);
+
+    renderExams();
+    renderDashboard();
 
     this.reset();
-    closeModal();
-    refreshAll();
-    alert("Job added successfully!");
+
+    alert("Examination created successfully!");
 });
 
-// Render jobs
-function renderJobs() {
-    const search = document.getElementById("jobSearch").value.toLowerCase();
-    const filter = document.getElementById("jobFilter").value;
-
-    const filtered = jobs.filter(j =>
-        (j.company.toLowerCase().includes(search) ||
-         j.role.toLowerCase().includes(search)) &&
-        (!filter || j.status === filter)
-    );
-
-    document.getElementById("jobList").innerHTML =
-        filtered.map(j => `
-        <tr>
-            <td class="company">${escapeHTML(j.company)}</td>
-            <td>${escapeHTML(j.role)}</td>
-            <td>${j.package} LPA</td>
-            <td>${escapeHTML(j.deadline)}</td>
-            <td><span class="tag ${j.status==="Open"?"open":"rejected"}">${j.status}</span></td>
-            <td><button class="delete-btn" onclick="deleteJob(${j.id})">Delete</button></td>
-        </tr>`).join("") ||
-        `<tr><td colspan="6">No jobs found.</td></tr>`;
-}
-
-// Delete job
-function deleteJob(id) {
-    const job = jobs.find(j => j.id === id);
-    if(!job) return;
-
-    if(!confirm("Delete this job posting?")) return;
-
-    jobs = jobs.filter(j => j.id !== id);
-    refreshAll();
-}
-
-// Applications
-function renderApplications() {
-    const search = document.getElementById("applicationSearch").value.toLowerCase();
-    const filter = document.getElementById("statusFilter").value;
-
-    const filtered = applications.filter(a =>
-        (a.name.toLowerCase().includes(search) ||
-         a.company.toLowerCase().includes(search) ||
-         a.roll.toLowerCase().includes(search)) &&
-        (!filter || a.status === filter)
-    );
-
-    document.getElementById("applicationList").innerHTML =
-        filtered.map(a => {
-            const index = applications.indexOf(a);
-            return `
-            <tr>
-                <td>${escapeHTML(a.name)}</td>
-                <td>${escapeHTML(a.roll)}</td>
-                <td>${escapeHTML(a.company)}</td>
-                <td>${escapeHTML(a.role)}</td>
-                <td><span class="tag ${a.status.toLowerCase()}">${a.status}</span></td>
-                <td>
-                    <select onchange="updateStatus(${index},this.value)">
-                        <option ${a.status==="Pending"?"selected":""}>Pending</option>
-                        <option ${a.status==="Selected"?"selected":""}>Selected</option>
-                        <option ${a.status==="Rejected"?"selected":""}>Rejected</option>
-                    </select>
-                </td>
-            </tr>`;
-        }).join("") || `<tr><td colspan="6">No applications found.</td></tr>`;
-}
-
-function updateStatus(index, status) {
-    applications[index].status = status;
-    refreshAll();
-}
-
-// Students
-function renderStudents() {
-    document.getElementById("studentList").innerHTML =
-        students.map(s => `
-        <tr>
-            <td>${escapeHTML(s.name)}</td>
-            <td>${escapeHTML(s.roll)}</td>
-            <td>${escapeHTML(s.dept)}</td>
-            <td>${applications.filter(a => a.roll === s.roll).length}</td>
-        </tr>`).join("");
-}
-
-// Companies
-function renderCompanies() {
-    const companies = [...new Set(jobs.map(j => j.company))];
-
-    document.getElementById("companyList").innerHTML =
-        companies.map(c => {
-            const companyJobs = jobs.filter(j => j.company === c);
-            return `
-            <tr>
-                <td>${escapeHTML(c)}</td>
-                <td>${companyJobs.filter(j => j.status === "Open").length}</td>
-                <td>${Math.max(...companyJobs.map(j => j.package))} LPA</td>
-            </tr>`;
-        }).join("") || `<tr><td colspan="3">No companies found.</td></tr>`;
-}
-
-// Dashboard
-function renderDashboard() {
-    document.getElementById("totalJobs").innerText =
-        jobs.filter(j => j.status === "Open").length;
-
-    document.getElementById("totalPlaced").innerText =
-        applications.filter(a => a.status === "Selected").length;
-
-    document.getElementById("totalCompanies").innerText =
-        new Set(jobs.map(j => j.company)).size;
-
-    document.getElementById("totalStudents").innerText = students.length;
-
-    document.getElementById("recentJobs").innerHTML =
-        jobs.slice(-5).reverse().map(j => `
-        <tr>
-            <td class="company">${escapeHTML(j.company)}</td>
-            <td>${escapeHTML(j.role)}</td>
-            <td>${j.package} LPA</td>
-            <td>${escapeHTML(j.deadline)}</td>
-            <td><span class="tag ${j.status==="Open"?"open":"rejected"}">${j.status}</span></td>
-        </tr>`).join("") ||
-        `<tr><td colspan="5">No job postings available.</td></tr>`;
-}
-
-// Reports
-function renderReports() {
-    document.getElementById("reportApplications").innerText = applications.length;
-    document.getElementById("reportSelected").innerText =
-        applications.filter(a => a.status === "Selected").length;
-    document.getElementById("reportPending").innerText =
-        applications.filter(a => a.status === "Pending").length;
-    document.getElementById("reportRejected").innerText =
-        applications.filter(a => a.status === "Rejected").length;
-}
-
-// CSV download
-function downloadReport() {
-    const rows = [
-        ["Student Name","Roll Number","Company","Job Role","Status"],
-        ...applications.map(a => [a.name,a.roll,a.company,a.role,a.status])
-    ];
-
-    const csv = rows.map(row =>
-        row.map(value => `"${String(value).replace(/"/g,'""')}"`).join(",")
-    ).join("\n");
-
-    const blob = new Blob(["\uFEFF"+csv], {type:"text/csv;charset=utf-8"});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "placement_report.csv";
-    link.click();
-    URL.revokeObjectURL(url);
-}
-
-// Prevent HTML injection in user-entered values
-function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, char => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#39;"
-    })[char]);
-}
-
-// Refresh all screens
-function refreshAll() {
-    renderJobs();
-    renderApplications();
-    renderStudents();
-    renderCompanies();
-    renderDashboard();
-    renderReports();
-}
-
-// Initial load
-refreshAll();
+// Initial rendering
+renderExams();
+renderDashboard();
 
 </script>
+
 </body>
 </html>
